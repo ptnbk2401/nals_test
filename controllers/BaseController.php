@@ -17,4 +17,17 @@ class BaseController
             header('Location: index.php?controller=pages&action=error');
         }
     }
+
+    function response($data = null)
+    {
+        $response = [
+            'STATUS' => 0
+        ];
+
+        if ($data != null) {
+            $response = array_merge($data, $response);
+        }
+
+        echo json_encode($response);
+    }
 }

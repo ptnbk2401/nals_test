@@ -5,7 +5,7 @@ class DB
     public static function getInstance() {
         if (!isset(self::$instance)) {
             try {
-                $dsn = 'mysql:dbname=nals_test;host=127.0.0.1';
+                $dsn = 'mysql:dbname=todo_list;host=127.0.0.1';
                 $user = 'root';
                 $password = '';
                 self::$instance = new PDO($dsn, $user, $password);

@@ -1,33 +1,59 @@
 $(function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+    renderFullCalendar();
+    confirmDelete();
+    setDataTable();
+});
+
+function renderFullCalendar() {
+    const events = {
+        url: URL_ROOT + '/?controller=works&action=api_list',
+        success: function (data) {
+            return data?.data?.map(function (post, index) {
+                    return {
+                        title: post?.name,
+                        start: post?.start_date,
+                        end: post?.end_date,
+                    };
+                });
+        },
+    }
+
+    const calendarEl = document.getElementById('calendar');
+    const calendar = calendarEl && new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
+        nowIndicator: true,
+        navLinks: true,
         selectable: true,
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: [
-            {
-                title: 'All Day Event',
-                start: '2021-12-08'
-            },
-            {
-                title: 'Long Event',
-                start: '2021-12-07',
-                end: '2021-12-10'
-            },
-            {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: '2021-12-28T16:00:00'
-            }
-        ],
+        events,
         eventClick: function(info) {
-            info.el.style.borderColor = 'red';
-            console.log(info)
+        },
+        eventTimeFormat: {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        },
+        slotLabelFormat: {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
         },
     });
-    calendar.render();
-});
+    calendar?.render();
+}
+
+function confirmDelete() {
+    $('.btn-delete').click(function (event) {
+        if (!confirm('Delete work?')) {
+            event.preventDefault()
+        }
+    })
+}
+
+function setDataTable() {
+    $('.data-table').DataTable();
+}

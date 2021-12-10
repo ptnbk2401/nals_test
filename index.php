@@ -1,5 +1,7 @@
 <?php
 require_once('connection.php');
+require_once('inc/constants.php');
+require_once('inc/flash.php');
 
 if (isset($_GET['controller'])) {
     $controller = $_GET['controller'];

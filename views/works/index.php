@@ -1,10 +1,11 @@
 <div class="py-5">
     <div class="row">
         <div class="col-12">
+            <?=@flash('works_store')?>
             <a class="btn btn-sm btn-success mb-2"
-               href="/?controller=works&action=create"
+               href="<?=URLROOT?>/?controller=works&action=create"
             >Create</a>
-            <table class="table">
+            <table class="table data-table">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -25,10 +26,16 @@
                             <td><?= $work['end_date'] ?></td>
                             <td><?= $work['status_name'] ?></td>
                             <td>
-                                <a class="btn btn-sm btn-primary mb-2"
-                                   href="/?controller=works&action=show&id=<?=$work['id'] ?? null?>"
+                                <a class="btn btn-sm btn-primary"
+                                   href="<?=URLROOT?>/?controller=works&action=show&id=<?=$work['id'] ?? null?>"
                                 >Edit</a>
-                                <button type="button" class="btn btn-sm btn-danger mb-2">Delete</button>
+                                <form style="display: inline"
+                                      action="<?=URLROOT?>/?controller=works&action=destroy"
+                                      method="post">
+                                    <input type="hidden" name="id" value="<?=$work['id'] ?? null?>">
+                                    <button type="submit" name="submit" value="delete"
+                                            class="btn btn-sm btn-danger btn-delete">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     <?php } ?>
